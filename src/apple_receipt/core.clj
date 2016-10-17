@@ -1,2 +1,0 @@
-(ns apple-receipt.core)
-
