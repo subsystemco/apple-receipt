@@ -27,7 +27,12 @@
 ;; https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW2
 (defrecord AppReceipt
     [receipt_type ; undocumented
-     adam_id ; undocumented
+
+     ; undocumented
+     ; https://affiliate.itunes.apple.com/resources/blog/song-previews/
+     ; http://stackoverflow.com/questions/13133786/is-there-any-globally-unique-indentifier-for-a-song-purchased-from-itunes#comment36473920_13133786
+     adam_id
+
      app_item_id ; undocumented
      bundle_id
      application_version
@@ -78,9 +83,7 @@
      latest_receipt_info
      ])
 
-(def org-map->Response map->Response)
-
-(defn map->Response
+(defn api-json->Response
   [map]
   (-> (org-map->Response map)
       (assoc :receipt (map->AppReceipt (:receipt map)))
