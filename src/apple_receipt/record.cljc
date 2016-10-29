@@ -85,7 +85,7 @@
 
 (defn api-json->Response
   [map]
-  (-> (org-map->Response map)
+  (-> (map->Response map)
       (assoc :receipt (map->AppReceipt (:receipt map)))
       (assoc :latest_receipt_info (mapv map->IAPReceipt (:latest_receipt_info map)))
       (assoc-in [:receipt :in_app] (mapv map->IAPReceipt (get-in map [:receipt :in_app])))))
