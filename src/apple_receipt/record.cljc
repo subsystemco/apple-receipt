@@ -1,4 +1,4 @@
-(ns apple-receipt.core)
+(ns apple-receipt.record)
 
 ;; https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW12
 (defrecord IAPReceipt
