@@ -3,7 +3,9 @@
   :url "https://github.com/leppert/apple-receipt"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.8.0"]]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojurescript  "1.9.293"]
+                 [com.cemerick/piggieback    "0.2.1"]]
   :plugins [[s3-wagon-private "1.2.0"]]
 
   :repositories {"snapshots" {:url "s3p://libs.subsystem.co/snapshots"
@@ -11,4 +13,6 @@
                               :passphrase :env/aws_libs_secret_key}
                  "releases" {:url "s3p://libs.subsystem.co/releases"
                              :username :env/aws_libs_access_key
-                             :passphrase :env/aws_libs_secret_key}})
+                             :passphrase :env/aws_libs_secret_key}}
+
+  :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]})
