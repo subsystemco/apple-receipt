@@ -5,7 +5,11 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript  "1.9.293"]
-                 [com.cemerick/piggieback    "0.2.1"]]
+                 [com.cemerick/piggieback    "0.2.1"]
+                 [clj-time "0.12.0"]
+                 [com.andrewmcveigh/cljs-time "0.5.0-alpha2"]
+                 [thermal "0.1.0-SNAPSHOT"]
+                 [medley "0.8.4"]]
   :plugins [[s3-wagon-private "1.2.0"]
             [lein-cljsbuild "1.1.4"]
             [lein-npm       "0.6.2"]
