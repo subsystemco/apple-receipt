@@ -1,6 +1,6 @@
 (ns apple-receipt.record)
 
-(defprotocol AppleData
+(defprotocol AppleDataProtocol
   (equal? [x y]))
 
 ;; https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW12
@@ -25,7 +25,7 @@
      version_external_identifier
      web_order_line_item_id
      is_trial_period] ; undocumented
-  AppleData
+  AppleDataProtocol
   (equal?
     [iap1 iap2]
     (= iap1 iap2)))
@@ -57,7 +57,7 @@
      original_purchase_date_pst ; undocumented
      original_application_version
      in_app]
-  AppleData
+  AppleDataProtocol
   (equal?
     [rcpt1 rcpt2]
     (let [keys [:request_date :request_date_ms :request_date_pst]]
@@ -93,7 +93,7 @@
      ;; Note that this appears to be out of date: https://developer.apple.com/library/ios/technotes/tn2413/_index.html#//apple_ref/doc/uid/DTS40016228-CH1-RECEIPT-HOW_DO_I_USE_THE_CANCELLATION_DATE_FIELD_
      latest_receipt
      latest_receipt_info]
-  AppleData
+  AppleDataProtocol
   (equal?
     [resp1 resp2]
     (and
