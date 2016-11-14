@@ -1,5 +1,8 @@
 (ns apple-receipt.record)
 
+(defprotocol AppleData
+  (equal? [x y]))
+
 ;; https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW12
 (defrecord IAPReceipt
     [quantity
@@ -21,8 +24,11 @@
      app_item_id
      version_external_identifier
      web_order_line_item_id
-     is_trial_period ; undocumented
-     ])
+     is_trial_period] ; undocumented
+  AppleData
+  (equal?
+    [iap1 iap2]
+    (= iap1 iap2)))
 
 ;; https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html#//apple_ref/doc/uid/TP40010573-CH106-SW2
 (defrecord AppReceipt
@@ -50,7 +56,13 @@
      original_purchase_date_ms ; undocumented
      original_purchase_date_pst ; undocumented
      original_application_version
-     in_app])
+     in_app]
+  AppleData
+  (equal?
+    [rcpt1 rcpt2]
+    (let [keys [:request_date :request_date_ms :request_date_pst]]
+      (= (apply dissoc rcpt1 keys)
+         (apply dissoc rcpt2 keys)))))
 
 ;; https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/StoreKitGuide/Chapters/Products.html#//apple_ref/doc/uid/TP40008267-CH2-SW4
 (defn receipt-type
@@ -80,8 +92,15 @@
      ;; See: https://forums.developer.apple.com/thread/51174
      ;; Note that this appears to be out of date: https://developer.apple.com/library/ios/technotes/tn2413/_index.html#//apple_ref/doc/uid/DTS40016228-CH1-RECEIPT-HOW_DO_I_USE_THE_CANCELLATION_DATE_FIELD_
      latest_receipt
-     latest_receipt_info
-     ])
+     latest_receipt_info]
+  AppleData
+  (equal?
+    [resp1 resp2]
+    (and
+     (= (dissoc resp1 :receipt :latest_receipt)
+        (dissoc resp2 :receipt :latest_receipt))
+     (equal? (:receipt resp1)
+             (:receipt resp2)))))
 
 (defn api-json->Response
   [map]

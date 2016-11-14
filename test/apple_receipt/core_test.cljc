@@ -1,5 +1,5 @@
 (ns apple-receipt.core-test
-  (:require [apple-receipt.core :refer [equal?]]
+  (:require [apple-receipt.record :as record]
             [thermal.apple :as thermal]
             #?@(:clj  [[clojure.test :refer :all]
                        [clj-time.core :as t]]
@@ -14,4 +14,4 @@
           resp2 (thermal/response {:product "com.subsystem.subscription.monthly"
                                    :plan_duration (t/months 1)
                                    :start_date (t/date-time 2016 8 14 4 3 27 456)})]
-      (is (equal? resp1 resp2)))))
+      (is (record/equal? resp1 resp2)))))
