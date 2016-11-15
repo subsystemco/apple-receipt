@@ -1,14 +1,5 @@
-# apple-receipt
+# Apple Receipt
 
-A Clojure library designed to ... well, that part is up to you.
-
-## Usage
-
-FIXME
-
-## License
-
-Copyright © 2016 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Clojure(Script) data structures for working with Apple
+receipts. Utilized by [Thermal](https://github.com/leppert/thermal),
+and utilizing Thermal for testing.
