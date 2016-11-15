@@ -34,6 +34,15 @@
           y (thermal/receipt (t/date-time 2016 8 14 4 3 27 456))]
       (is (record/equal? x y))))
 
+  (testing "Receipt sorts iaps by purchase_date before validating equality"
+    (let [x (thermal/receipt (t/date-time 2016 8 14 4 3 27 456)
+                             [{:purchase_date_ms "123"}
+                              {:purchase_date_ms "456"}])
+          y (thermal/receipt (t/date-time 2016 8 14 4 3 27 456)
+                             [{:purchase_date_ms "456"}
+                              {:purchase_date_ms "123"}])]
+      (is (record/equal? x y))))
+
   (testing "Receipt considers fields other than request_dates to validate inequality"
     (let [x (thermal/receipt (t/date-time 2014 8 14 4 3 27 456))
           y (thermal/receipt (t/date-time 2016 8 14 4 3 27 456))]
@@ -46,6 +55,16 @@
           y (thermal/response {:product "com.subsystem.subscription.monthly"
                                :plan_duration (t/months 1)
                                :start_date (t/date-time 2016 8 14 4 3 27 456)})]
+      (is (record/equal? x y))))
+
+  (testing "Response sorts latest_receipt_info by purchase_date before validating equality"
+    (let [x (thermal/response {:product "com.subsystem.subscription.monthly"
+                               :plan_duration (t/months 1)
+                               :start_date (t/date-time 2014 8 14 4 3 27 456)})
+          y (-> (thermal/response {:product "com.subsystem.subscription.monthly"
+                                   :plan_duration (t/months 1)
+                                   :start_date (t/date-time 2014 8 14 4 3 27 456)})
+                (#(assoc % :latest_receipt_info (into [] (rseq (:latest_receipt_info %))))))]
       (is (record/equal? x y))))
 
   (testing "Response considers fields other than latest_receipt to validate inequality"

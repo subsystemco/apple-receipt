@@ -1,5 +1,21 @@
 (ns apple-receipt.record)
 
+(defn normalize-iaps
+  [receipt key]
+  (assoc receipt key (sort-by :purchase_date_ms (get receipt key))))
+
+(defn normalize-receipt
+  [receipt]
+  (-> receipt
+      (normalize-iaps :in_app)
+      (dissoc :request_date :request_date_ms :request_date_pst)))
+
+(defn normalize-response
+  [response]
+  (-> response
+      (normalize-iaps :latest_receipt_info)
+      (dissoc :receipt :latest_receipt)))
+
 (defprotocol AppleDataProtocol
   (equal? [x y]))
 
@@ -60,9 +76,8 @@
   AppleDataProtocol
   (equal?
     [rcpt1 rcpt2]
-    (let [keys [:request_date :request_date_ms :request_date_pst]]
-      (= (apply dissoc rcpt1 keys)
-         (apply dissoc rcpt2 keys)))))
+    (= (normalize-receipt rcpt1)
+       (normalize-receipt rcpt2))))
 
 ;; https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/StoreKitGuide/Chapters/Products.html#//apple_ref/doc/uid/TP40008267-CH2-SW4
 (defn receipt-type
@@ -97,8 +112,8 @@
   (equal?
     [resp1 resp2]
     (and
-     (= (dissoc resp1 :receipt :latest_receipt)
-        (dissoc resp2 :receipt :latest_receipt))
+     (= (normalize-response resp1)
+        (normalize-response resp2))
      (equal? (:receipt resp1)
              (:receipt resp2)))))
 
