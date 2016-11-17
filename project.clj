@@ -1,4 +1,4 @@
-(defproject apple-receipt "0.1.0-SNAPSHOT"
+(defproject co.subsystem/apple-receipt "0.1.0-SNAPSHOT"
   :description "Utilities for working with receipts returned by Apple's StoreKit APIs and verifyReceipt endpoints."
   :url "https://github.com/leppert/apple-receipt"
   :license {:name "Eclipse Public License"
@@ -8,7 +8,7 @@
                  [com.cemerick/piggieback    "0.2.1"]
                  [clj-time "0.12.0"]
                  [com.andrewmcveigh/cljs-time "0.5.0-alpha2"]
-                 [thermal "0.1.0-SNAPSHOT"]]
+                 [co.subsystem/thermal "0.1.0-SNAPSHOT"]]
   :plugins [[s3-wagon-private "1.2.0"]
             [lein-cljsbuild "1.1.4"]
             [lein-npm       "0.6.2"]
