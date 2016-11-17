@@ -7,12 +7,13 @@
                  [org.clojure/clojurescript  "1.9.293"]
                  [com.cemerick/piggieback    "0.2.1"]
                  [clj-time "0.12.0"]
-                 [com.andrewmcveigh/cljs-time "0.5.0-alpha2"]
-                 [co.subsystem/thermal "0.1.0-SNAPSHOT"]]
+                 [com.andrewmcveigh/cljs-time "0.5.0-alpha2"]]
   :plugins [[s3-wagon-private "1.2.0"]
             [lein-cljsbuild "1.1.4"]
             [lein-npm       "0.6.2"]
             [lein-doo       "0.1.7"]]
+
+  :profiles {:test {:dependencies [[co.subsystem/thermal "0.1.0-SNAPSHOT"]]}}
 
   :npm {:dependencies [[source-map-support "0.4.6"]]}
 
